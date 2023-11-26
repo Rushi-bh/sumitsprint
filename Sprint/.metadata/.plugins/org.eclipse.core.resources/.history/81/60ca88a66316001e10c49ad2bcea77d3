@@ -1,0 +1,33 @@
+package com.sprint.task;
+
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Test;
+
+import io.github.bonigarcia.wdm.WebDriverManager;
+
+public class TestRunner {
+	@Test
+	public void f() {
+	}
+
+	@BeforeTest
+	public void beforeTest() {
+		WebDriverManager.chromedriver().setup();
+		ChromeOptions options = new ChromeOptions();
+		// to maximize the screen
+		options.addArguments("--start-maximized");
+		// to disable the notifications by browser
+		options.addArguments("--disable-notifications");
+		driver = new ChromeDriver(options);
+		driver.get(url);
+		Thread.sleep(1000);
+	}
+
+	@AfterTest
+	public void afterTest() {
+	}
+
+}

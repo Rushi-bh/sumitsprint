@@ -1,0 +1,10 @@
+package com.magicbricks.propertyServices;
+
+import io.cucumber.junit.CucumberOptions;
+import io.cucumber.testng.AbstractTestNGCucumberTests;
+
+
+@CucumberOptions(features = "src/test/resources/features", glue = "com.magicbricks.steps", dryRun = false)
+public class TestRunner extends AbstractTestNGCucumberTests{
+ 	
+}

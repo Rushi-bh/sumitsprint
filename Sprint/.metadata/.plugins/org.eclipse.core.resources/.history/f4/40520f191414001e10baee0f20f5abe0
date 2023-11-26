@@ -1,0 +1,31 @@
+package com.magicbricks.steps;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeTest;
+
+public class BaseSteps {
+	
+	public static WebDriver driver;
+	
+	@BeforeTest
+	public void setUpDriver() throws InterruptedException {
+		System.setProperty("Webdriver.chrome.driver", "C:\\driver\\chromedriver.exe");
+		ChromeOptions options = new ChromeOptions();
+//  	to maximize the screen
+		options.addArguments("--start-maximized");
+//		to  disable the notifications by browser
+		options.addArguments("--disable-notifications");
+		driver = new ChromeDriver(options);
+		driver.get("https://www.magicbricks.com/");
+		Thread.sleep(1000);
+	}
+
+	@AfterTest
+	public void tearDown() {
+		
+	}
+
+}

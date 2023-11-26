@@ -1,0 +1,22 @@
+Feature: property services
+  To test different functionality of property services
+  
+	Scenario: user redirected to property service page successfully
+		Given user is on Home Page
+		When clicks on property services
+		And selects view all services 
+		Then user is redirected to property services page
+	
+	@tag
+  Scenario Outline: Hiring Packers and Movers successfully
+    Given user is on property services page
+    And clicks on packers & movers link
+    When user provides "<city name>" and "<contact number>"
+    And clicks on check prices
+    When user provide all pickup details
+    And clicks on proceed
+    Then user hired packers and movers successfully
+    
+    Examples:
+			| city name | contact number |
+			| Pune      | 6204841752     |

@@ -1,0 +1,47 @@
+package com.magicbricks.pages;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
+
+public class HomePage extends BasePage{
+	
+	private WebDriver driver;
+	private Actions action;
+	private PropertyServicesPage propertyServicesPage;
+	
+	@FindBy(linkText = "Property Services")
+	WebElement services;
+	
+	@FindBy(linkText = "View All Services")
+	WebElement allServices;
+	
+	@FindBy(linkText = "Packers & Movers")
+	WebElement packers_element;
+	
+	
+	public HomePage(WebDriver driver) {
+		super(driver);
+		this.driver = driver;
+		action = new Actions(driver);
+		PageFactory.initElements(driver, this);
+	}
+	
+	public void viewPropertyServices() {
+		action
+		.moveToElement(services)
+		.perform();
+	}
+	
+	public PropertyServicesPage viewAllServices() {
+		action
+		.moveToElement(allServices).click()
+		.perform();
+		
+		propertyServicesPage = new PropertyServicesPage(driver);
+		return propertyServicesPage;
+		
+	}
+}

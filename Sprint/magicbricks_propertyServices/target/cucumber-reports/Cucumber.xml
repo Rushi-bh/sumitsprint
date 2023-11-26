@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="Cucumber" time="86.041" tests="6" skipped="0" failures="0" errors="0">
+<testcase classname="Packers and movers functionality" name="user redirected to property service page successfully" time="6.907">
+<system-out><![CDATA[
+Given user is on Home Page..................................................passed
+When clicks on property services............................................passed
+And selects view all services...............................................passed
+Then user is redirected to property services page...........................passed
+]]></system-out>
+</testcase>
+<testcase classname="Packers and movers functionality" name="Verifying user successfully - Example #1.1" time="22.046">
+<system-out><![CDATA[
+Given user is on property services page.....................................passed
+And clicks on packers & movers link.........................................passed
+When user provides "0" and "1"..............................................passed
+And clicks on check prices..................................................passed
+Then user verified successfully.............................................passed
+]]></system-out>
+</testcase>
+<testcase classname="Packers and movers functionality" name="Verifying user successfully - Example #1.2" time="20.078">
+<system-out><![CDATA[
+Given user is on property services page.....................................passed
+And clicks on packers & movers link.........................................passed
+When user provides "0" and "2"..............................................passed
+And clicks on check prices..................................................passed
+Then user verified successfully.............................................passed
+]]></system-out>
+</testcase>
+<testcase classname="Packers and movers functionality" name="Hiring Packers and movers successfully - Example #1.1" time="21.974">
+<system-out><![CDATA[
+Given user is on pick up details page.......................................passed
+When user provide "3 BHK" , "3".............................................passed
+And "Hinjewadi, Pune" , "Talwade, Pune" locations...........................passed
+And provide additional pickup details and clicks on proceed.................passed
+Then user has hired packers and movers successfully.........................passed
+]]></system-out>
+</testcase>
+<testcase classname="Packers and movers functionality" name="Shifting between cities successfull - Example #1.1" time="7.481">
+<system-out><![CDATA[
+Given user is on Packers and Movers page....................................passed
+When user select between cities option......................................passed
+And enters "Bangalore" and "Pune" cities....................................passed
+And user provide valid "6204841752".........................................passed
+When user clicks on check prices............................................passed
+Then user receive otp successfully..........................................passed
+]]></system-out>
+</testcase>
+<testcase classname="Packers and movers functionality" name="Shifting between cities unsuccessfull - Example #1.1" time="7.324">
+<system-out><![CDATA[
+Given user is on Packers and Movers page....................................passed
+When user select between cities option......................................passed
+And enters invalid "Bangalore" and "Bangalore" cities.......................passed
+And user provide invalid "6"................................................passed
+When user clicks on check prices............................................passed
+Then user failed to check prices............................................passed
+]]></system-out>
+</testcase>
+</testsuite>

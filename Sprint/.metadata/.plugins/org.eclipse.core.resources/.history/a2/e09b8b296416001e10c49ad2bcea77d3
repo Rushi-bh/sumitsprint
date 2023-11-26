@@ -1,0 +1,16 @@
+package com.sprint.task.pages;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.FindBy;
+
+public class HomePage {
+	
+	private WebDriver driver;
+	
+	@FindBy(id = "")
+	
+	public HomePage(WebDriver driver) {
+		this.driver = driver;
+	}
+
+}

@@ -1,0 +1,20 @@
+package com.magicbricks.pages;
+
+import org.junit.Assert;
+import org.openqa.selenium.WebDriver;
+
+public class BasePage {
+	
+	public static WebDriver driver;
+	
+	public BasePage(WebDriver driver) {
+		this.driver = driver;
+	}
+	
+	public static void assertEquals(String expected,String actual) {
+		Assert.assertEquals(actual,expected);
+	}
+ 	
+	
+
+}

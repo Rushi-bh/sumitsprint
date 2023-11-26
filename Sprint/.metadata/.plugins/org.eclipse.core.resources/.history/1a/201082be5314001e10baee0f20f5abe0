@@ -1,0 +1,38 @@
+Feature: Packers and movers functionality
+  To test Packers and movers functionality of property services
+  
+  @SmokeTest
+	Scenario: user redirected to property service page successfully
+		Given user is on Home Page
+		When clicks on property services
+		And selects view all services 
+		Then user is redirected to property services page
+	
+	@FunctionalTest1
+  Scenario Outline: Verifying user successfully
+    Given user is on property services page
+    And clicks on packers & movers link
+    When user provides "<city name>" and "<contact number>"
+    And clicks on check prices
+    Then user verified successfully
+    
+  Examples:
+			| city name | contact number |
+			| 1         | 1     				 |
+			| 2         | 2     				 |
+	
+	@FuntionalTest2	
+	Scenario: Hiring Packers and movers successfully
+		Given user is on pick up details page
+    When user provide "<home size>" , "<shifting date>"
+    And "<shifting from>" , "<shifting to>" locations 
+    And provide additional pickup details and clicks on proceed
+    Then user has hired packers and movers successfully
+  
+  Examples:
+  		| home size | shifting date | shifting from  | shifting to  |
+  		| 2 BHK     |      2        | Hinjewadi, Pune| Talwade, Pune| 
+			
+   	
+    
+    

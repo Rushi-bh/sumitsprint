@@ -1,0 +1,237 @@
+package com.magicbricks.pages;
+
+import java.awt.AWTException;
+import java.awt.Robot;
+import java.awt.event.KeyEvent;
+import java.time.Duration;
+import java.util.List;
+
+import javax.xml.xpath.XPath;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+public class PackersAndMoversPage {
+	
+	private WebDriver driver;
+	private Actions action;
+	private JavascriptExecutor js;
+	
+	@FindBy(id = "pnm-movingfrom")
+	WebElement city;
+	
+	@FindBy(id = "movingFromCityList")
+	WebElement cityList;
+	
+	@FindBy(id = "movingFromCityListBetweenCities")
+	WebElement betweenCityList;
+	
+	@FindBy(id = "pnm-mobile")
+	WebElement contact;
+	
+	@FindBy(xpath = "//a[@id='intra']")
+	WebElement checkButton;
+	
+	@FindBy(xpath = "//input[@value='1BHK']")
+	WebElement ele_1bhk;
+	
+	@FindBy(xpath = "//input[@value='2BHK']")
+	WebElement ele_2bhk;
+	
+	@FindBy(xpath = "//input[@value='3BHK']")
+	WebElement ele_3bhk;
+	
+	@FindBy(id = "movementDate")
+	WebElement date;
+	
+	@FindBy(id = "pnm-movingFromLocality")
+	WebElement ele_from;
+	
+	@FindBy(id = "pnm-movingFromLocality-stateautocomplete-list")
+	WebElement list_from;
+	
+	@FindBy(id = "pnm-movingtoLocality")
+	WebElement ele_to;
+	
+	@FindBy(id = "pnm-fromLift")
+	WebElement ele_fromLift;
+	
+	@FindBy(id = "pnm-toFloor") 
+	WebElement ele_toFloor;
+	
+	@FindBy(linkText = "Next")
+	WebElement nextButton;
+	
+	@FindBy(linkText = "Proceed")
+	WebElement proceedButton;
+	
+	@FindBy(xpath = "//div[text()=\"Between Cities\"]")
+	WebElement betweenCities;
+		
+	public PackersAndMoversPage(WebDriver driver) {
+		this.driver = driver;
+		action = new Actions(driver);
+		js = (JavascriptExecutor) driver;
+		PageFactory.initElements(driver, this);
+	}
+	
+	public void setCity(String cityName) {
+		city.click();
+		try
+		{
+			Thread.sleep(1000);
+		} 
+		catch (InterruptedException e)
+		{
+			e.printStackTrace();
+		}
+		List<WebElement> city_list = cityList.findElements(By.tagName("li"));
+		for(WebElement option: city_list) {
+			System.out.println(option.getText());
+			if(option.getText().equals(cityName)) {
+				option.click();
+			}
+		}
+	}
+	
+	public void setContact(String number) {
+		contact.sendKeys(number);
+	}
+	
+	public void submit_details() {
+		checkButton.click();
+	}
+	
+	public void selectFlatType(String homeType) throws InterruptedException {
+		new WebDriverWait(driver, Duration.ofSeconds(10))
+		.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.linkText("Change"))))
+		.click();
+		
+		if(homeType.equals("1 BHK")) {
+			ele_2bhk.click();
+		}
+		else if(homeType.equals("2 BHK")) {
+			ele_2bhk.click();
+		}
+		else ele_3bhk.click();
+	}
+	
+	public void selectDate(int days) throws InterruptedException {
+		date.click();
+		Thread.sleep(1000);
+		for(int i=0;i<days;i++) {
+			action.sendKeys(Keys.ARROW_RIGHT).perform();
+			try {Thread.sleep(1000);} catch (InterruptedException e) {e.printStackTrace();}
+			action.sendKeys(Keys.ENTER).perform();
+		}
+	}
+	
+	public void setMovingFrom(String from) throws InterruptedException {
+//		ele_from.click();
+//		ele_from.clear();
+//		Thread.sleep(1000);
+//		ele_from.sendKeys(from);
+//		List<WebElement> list = new WebDriverWait(driver, Duration.ofSeconds(10))
+//				.until(ExpectedConditions.visibilityOf(list_from))
+//				.findElements(By.xpath("div[@data-id]"));
+//		System.out.println(list.size());
+//		Thread.sleep(2000);
+//		for(WebElement place: list) {
+//			System.out.println(place.getText());
+//			if(place.getText().equals("Hinjewadi, Pune")) {
+//				place.click();
+//				
+//				Thread.sleep(1000);
+//			}
+//		}
+		
+		//driver.findElement(By.id("pnm-fromFloor")).sendKeys("2");
+	}
+	
+	public void setLiftFrom() throws AWTException {
+		ele_fromLift.click();
+		//scroll
+		scroll(2);
+	}
+	
+	public void setMovingTo(String to) {
+//		ele_to.click();
+//		ele_to.clear();
+//		Thread.sleep(1000);
+//		ele_to.sendKeys(from);
+//		List<WebElement> list = new WebDriverWait(driver, Duration.ofSeconds(10))
+//				.until(ExpectedConditions.visibilityOf(list_from))
+//				.findElements(By.xpath("div[@data-id]"));
+//		System.out.println(list.size());
+//		Thread.sleep(2000);
+//		for(WebElement place: list) {
+//			System.out.println(place.getText());
+//			if(place.getText().equals("Hinjewadi, Pune")) {
+//				place.click();
+//				
+//				Thread.sleep(1000);
+//			}
+//		}
+	}
+	
+	public void setliftTo(String floor) {
+		ele_toFloor.clear();
+		ele_toFloor.sendKeys(floor);
+	}
+	
+	public void clickNext() {
+		new WebDriverWait(driver, Duration.ofSeconds(10)).until(ExpectedConditions.visibilityOf(nextButton)).click();
+	}
+	
+	public void clickProceed() {
+		proceedButton.click();
+	}
+	
+	public void scroll(int num) throws AWTException {
+		Robot robot = new Robot();
+        // Scroll Down using Robot class
+        for(int i=1;i<=num;i++)robot.keyPress(KeyEvent.VK_PAGE_DOWN);
+	}
+	
+	public void selectBetweenCities() {
+		betweenCities.click();
+	}
+	
+	public void selectSourceCity(String cityName) throws InterruptedException {
+		Thread.sleep(1000);
+		city.click();
+		try
+		{
+			Thread.sleep(1000);
+		} 
+		catch (InterruptedException e)
+		{
+			e.printStackTrace();
+		}
+		List<WebElement> city_list = betweenCityList.findElements(By.tagName("li"));
+		for(WebElement option: city_list) {
+			System.out.println(option.getText());
+			if(option.getText().equals(cityName)) {
+				option.click();
+			}
+		}
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+
+}

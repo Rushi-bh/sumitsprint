@@ -1,0 +1,146 @@
+package com.magicbricks.steps;
+
+import java.awt.AWTException;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.time.Duration;
+
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.openqa.selenium.By;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
+
+import com.magicbricks.pages.HomePage;
+import com.magicbricks.pages.PackersAndMoversPage;
+import com.magicbricks.pages.PropertyServicesPage;
+
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
+
+public class PackersAndMoversSteps extends BaseSteps {
+
+	private HomePage homePage;
+	private PropertyServicesPage propertyServicesPage;
+	private PackersAndMoversPage packersAndMoversPage;
+
+//	scenario - 1
+	@Given("user is on Home Page")
+	public void user_is_on_home_page() throws InterruptedException {
+		homePage = new HomePage(driver);
+		
+	}
+	@When("clicks on property services")
+	public void clicks_on_property_services() throws InterruptedException {
+		Thread.sleep(5000);
+		homePage.viewPropertyServices();
+		
+	}
+	@When("selects view all services")
+	public void selects_view_all_services() {
+		propertyServicesPage = homePage.viewAllServices();
+	}
+	@Then("user is redirected to property services page")
+	public void user_is_redirected_to_property_services_page() throws InterruptedException {
+		// switching to property service window
+		String parentHandle = driver.getWindowHandle();
+
+		for (String handle : driver.getWindowHandles()) {
+			if (!handle.equals(parentHandle))
+				driver.switchTo().window(handle);
+			else
+				driver.close();
+		}
+		// validating if user is on property service page
+		Thread.sleep(1000);
+		String title = propertyServicesPage.ele_title.getText();
+		Assert.assertEquals("Property Services", title);
+		tearDown();
+	}
+
+//	scenario - 2
+	@Given("user is on property services page")
+	public void user_is_on_property_services_page() throws InterruptedException {
+		driver.get("https://www.magicbricks.com/property-services/?inc=GNB_PS");
+		propertyServicesPage = new PropertyServicesPage(driver);
+		propertyServicesPage.hoverAll();
+	}
+	@When("clicks on packers & movers link")
+	public void clicks_on_packers_movers_link() {
+		packersAndMoversPage =  propertyServicesPage.viewPackers();
+	}
+	@When("user provides {string} and {string}")
+	public void user_provides_and(String city, String contact) throws IOException {
+		//switching to packers and movers window
+		String parentHandle = driver.getWindowHandle();
+		for (String handle : driver.getWindowHandles()) {
+			if (!handle.equals(parentHandle))
+				driver.switchTo().window(handle);
+			else
+				driver.close();
+		}
+		
+		//accepting data from excel sheet
+		File file = new File("excelData/userInformation.xlsx");
+		FileInputStream fileInputStream = new FileInputStream(file);
+		Workbook workbook = new XSSFWorkbook(fileInputStream);
+		Sheet sheet = workbook.getSheetAt(0);
+		
+		String cityName = sheet.getRow(Integer.parseInt(city)).getCell(0) + "";
+		String contactNumber = sheet.getRow(Integer.parseInt(contact)).getCell(1) + " ";
+		
+		packersAndMoversPage.setCity(cityName);
+		packersAndMoversPage.setContact(contactNumber);
+
+	}
+	@When("clicks on check prices")
+	public void clicks_on_check_prices() throws InterruptedException{
+		packersAndMoversPage.submit_details();
+		Thread.sleep(10000);
+		
+		
+	}
+	@Then("user verified successfully")
+	public void user_verified_successfully() {
+	    
+	}
+	
+//	scenario - 3
+	@Given("user is on pick up details page")
+	public void user_is_on_pick_up_details_page() {
+		driver.get("https://www.magicbricks.com/propertyservices/packers-movers-within-city-movement-details/F23AC78778F08ED7FDD9832DD1D2079D?inc=propservices_homepage_topicon");
+		packersAndMoversPage = new PackersAndMoversPage(driver);
+	}
+	@When("user provide {string} , {string}")
+	public void user_provide(String homeSize, String days) throws InterruptedException {
+	   packersAndMoversPage.selectFlatType(homeSize);
+	   Thread.sleep(1000);
+	   packersAndMoversPage.selectDate(Integer.parseInt(days));
+	}
+	@When("{string} , {string} locations")
+	public void locations(String source, String destination) throws InterruptedException {
+		packersAndMoversPage.setMovingFrom(source);
+		packersAndMoversPage.setMovingTo(destination);
+	}
+	@When("provide additional pickup details and clicks on proceed")
+	public void provide_additional_pickup_details_and_clicks_on_proceed() throws InterruptedException, AWTException {
+		packersAndMoversPage.setLiftFrom();
+		packersAndMoversPage.setliftTo("4");
+		packersAndMoversPage.clickNext();
+		Thread.sleep(2000);
+		packersAndMoversPage.scroll(4);
+		packersAndMoversPage.clickNext();
+	}
+	@Then("user has hired packers and movers successfully")
+	public void user_has_hired_packers_and_movers_successfully() throws InterruptedException {
+		Thread.sleep(1000);
+	    packersAndMoversPage.clickProceed();
+	    Thread.sleep(2000);
+	    String amount = driver.findElement(By.id("movementQuote")).getText();
+	}
+
+}

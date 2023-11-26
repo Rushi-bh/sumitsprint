@@ -1,0 +1,64 @@
+Feature: Packers and movers functionality
+  To test Packers and movers functionality of property services
+  
+  @SmokeTest
+	Scenario: user redirected to property service page successfully
+		Given user is on Home Page
+		When clicks on property services
+		And selects view all services 
+		Then user is redirected to property services page
+	
+	@FunctionalTest1
+  Scenario Outline: Verifying user successfully
+    Given user is on property services page
+    And clicks on packers & movers link
+    When user provides "<sheet>" and "<row>"
+    And clicks on check prices
+    Then user verified successfully
+    
+  Examples:
+			| sheet | row |
+			| 0     | 1   |
+			| 0     | 2   |
+	
+	@FunctionalTest2	
+	Scenario: Hiring Packers and movers successfully
+		Given user is on pick up details page
+    When user provide "<home size>" , "<shifting date>"
+    And "<shifting from>" , "<shifting to>" locations 
+    And provide additional pickup details and clicks on proceed
+    Then user has hired packers and movers successfully
+  
+  Examples:
+  		| home size | shifting date | shifting from  | shifting to  |
+  		| 3 BHK     |      3        | Hinjewadi, Pune| Talwade, Pune|
+  	
+  @Positive	
+  Scenario: Shifting between cities successfull
+  Given user is on Packers and Movers page
+  When user select between cities option
+  And enters "<shifting from>" and "<shifting to>" cities
+  And user provide valid "<phone number>"
+  When user clicks on check prices
+  Then user receive otp successfully
+  Examples: 
+  |shifting from|shifting to|phone number|
+  |Bangalore    |Pune       |6204841752  |
+
+  
+  @Negative	
+  Scenario: Shifting between cities unsuccessfull
+  Given user is on Packers and Movers page
+  When user select between cities option
+  And enters invalid "<shifting from>" and "<shifting to>" cities
+  And user provide invalid "<phone number>"
+  When user clicks on check prices
+  Then user failed to check prices
+  Examples: 
+  |shifting from|shifting to|phone number|
+  |Bangalore    |Bangalore  |6           |
+
+			
+   	
+    
+    

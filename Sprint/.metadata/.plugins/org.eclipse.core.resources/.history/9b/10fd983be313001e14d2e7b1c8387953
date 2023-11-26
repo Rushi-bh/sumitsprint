@@ -1,0 +1,155 @@
+package com.magicbricks.pages;
+
+import java.awt.AWTException;
+import java.awt.Robot;
+import java.awt.event.KeyEvent;
+import java.util.List;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
+
+public class PackersAndMoversPage {
+	
+	private WebDriver driver;
+	private Actions action;
+	private JavascriptExecutor js;
+	
+	@FindBy(id = "pnm-movingfrom")
+	WebElement city;
+	
+	@FindBy(id = "movingFromCityList")
+	WebElement cityList;
+	
+	@FindBy(id = "pnm-mobile")
+	WebElement contact;
+	
+	@FindBy(xpath = "//a[@id='intra']")
+	WebElement check_button;
+	
+	@FindBy(xpath = "//input[@value='1BHK']")
+	WebElement ele_1bhk;
+	
+	@FindBy(xpath = "//input[@value='2BHK']")
+	WebElement ele_2bhk;
+	
+	@FindBy(xpath = "//input[@value='3BHK']")
+	WebElement ele_3bhk;
+	
+	@FindBy(id = "movementDate")
+	WebElement date;
+	
+	@FindBy(id = "pnm-movingFromLocality")
+	WebElement ele_from;
+	
+	@FindBy(id = "pnm-movingFromLocality-stateautocomplete-list")
+	WebElement list_from;
+	
+	@FindBy(id = "pnm-movingtoLocality")
+	WebElement ele_to;
+	
+	@FindBy(id = "pnm-fromLift")
+	WebElement ele_fromLift;
+	
+	public PackersAndMoversPage(WebDriver driver) {
+		this.driver = driver;
+		action = new Actions(driver);
+		js = (JavascriptExecutor) driver;
+		PageFactory.initElements(driver, this);
+	}
+	
+	public void setCity(String cityName) {
+		city.click();
+		try
+		{
+			Thread.sleep(1000);
+		} 
+		catch (InterruptedException e)
+		{
+			e.printStackTrace();
+		}
+		List<WebElement> city_list = cityList.findElements(By.tagName("li"));
+		for(WebElement option: city_list) {
+			System.out.println(option.getText());
+			if(option.getText().equals(cityName)) {
+				option.click();
+			}
+		}
+	}
+	
+	public void setContact(String number) {
+		contact.sendKeys(number);
+	}
+	
+	public void submit_details() {
+		check_button.click();
+	}
+	
+	public void selectFlatType() {
+		
+		ele_2bhk.click();
+	}
+	
+	public void selectDate() {
+		date.click();
+		
+		for(int i=0;i<2;i++) {
+			action.sendKeys(Keys.ARROW_RIGHT).perform();
+			try {Thread.sleep(1000);} catch (InterruptedException e) {e.printStackTrace();}
+			action.sendKeys(Keys.ENTER).perform();
+		}
+	}
+	
+	public void setMovingFrom(String from) throws InterruptedException {
+//		ele_from.click();
+//		ele_from.clear();
+//		//ele_from.sendKeys(Keys.COMMAND, "a" , Keys.BACK_SPACE);
+//		Thread.sleep(1000);
+//		ele_from.sendKeys(from);
+//		List<WebElement> list = new WebDriverWait(driver, Duration.ofSeconds(10))
+//				.until(ExpectedConditions.visibilityOf(list_from))
+//				.findElements(By.xpath("div[@data-id]"));
+//		System.out.println(list.size());
+//		Thread.sleep(2000);
+//		for(WebElement place: list) {
+//			System.out.println(place.getText());
+//			if(place.getText().equals("Hinjewadi, Pune")) {
+//				new WebDriverWait(driver, Duration.ofSeconds(10)).until(ExpectedConditions.visibilityOf(place)).click();
+//				Thread.sleep(1000);
+//			}
+//		}
+		
+		for(int i=0;i<5;i++) action.sendKeys(Keys.ARROW_DOWN);
+		//driver.findElement(By.id("pnm-fromFloor")).sendKeys("2");
+	}
+	
+	public void setliftFrom() throws AWTException {
+		ele_fromLift.click();
+		action.sendKeys(Keys.ARROW_DOWN);
+		js.executeScript("window.scrollBy(0,250)", "");
+		Robot robot = new Robot();
+
+        // Scroll Down using Robot class
+        robot.keyPress(KeyEvent.VK_PAGE_DOWN);
+        robot.keyRelease(KeyEvent.VK_PAGE_DOWN);
+		
+	}
+	
+	public void setMovingTo(String to) {
+		ele_to.sendKeys(to);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+
+}

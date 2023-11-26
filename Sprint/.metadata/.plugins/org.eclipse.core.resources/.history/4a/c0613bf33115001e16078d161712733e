@@ -1,0 +1,50 @@
+package com.magicbricks.steps;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.testng.annotations.BeforeTest;
+
+import com.magicbricks.configs.ConfigFileReader;
+
+import io.github.bonigarcia.wdm.WebDriverManager;
+
+public class BaseSteps {
+	
+	public static WebDriver driver;
+	
+	@BeforeTest
+	public static void setUpDriver() throws InterruptedException {
+		ConfigFileReader configs = new ConfigFileReader();
+		
+		String browserName = configs.getBrowser();
+		String url = configs.getUrl();
+		
+		if(browserName.equalsIgnoreCase("Chrome")) 
+		{
+            WebDriverManager.chromedriver().setup();
+            ChromeOptions options = new ChromeOptions();
+            //to maximize the screen
+            options.addArguments("--start-maximized");
+            //to  disable the notifications by browser
+            options.addArguments("--disable-notifications");
+    		driver = new ChromeDriver(options);
+            driver.get(url);
+            Thread.sleep(1000);
+        } 
+		else if (browserName.equalsIgnoreCase("firefox")) 
+		{
+            // firefox
+        } 
+		else if (browserName.equalsIgnoreCase("edge")) 
+		{
+            // edge
+        }
+        
+	}
+
+	public static void tearDown() {
+		driver.quit();
+	}
+
+}

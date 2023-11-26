@@ -1,0 +1,10 @@
+io.cucumber.junit.UndefinedStepException: The step 'clicks on check prices' is undefined.
+You can implement this step using the snippet(s) below:
+
+@When("clicks on check prices")
+public void clicks_on_check_prices() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+
+

@@ -1,0 +1,5 @@
+package com.magicbricks.pages;
+
+public class BasePage {
+
+}
